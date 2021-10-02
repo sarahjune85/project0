@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+/* Main styles */
+body {
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Press Start 2P", cursive;
+}
+
+.bg-container /* used for presentation */ {
+  width: 60vh;
+  height: 60vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  overflow: hidden;
+  border: 1px solid rgb(121, 121, 121);
+  /* box-shadow: 0 20px 80px rgba(56, 56, 56, 0.7); */
+}
+
+.bg-scroll {
+  opacity: 1;
+  position: absolute;
+  /* make BG larger than container */
+  height: 150%;
+  width: 150%;
+  /* center bg in container - ratio of 150% */
+  top: -25%;
+  left: -25%;
+  /* linear gradient with alpha to alter image opacity */
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+    url("../img/leaves.png") repeat;
+  animation: backgroundScroll 25s linear infinite;
+  transform: rotate(12deg) scale(1);
+  transform-origin: center center;
+  z-index: -1;
+}
+
+@keyframes backgroundScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    /* pattern bg texture is 1000x1000px */
+    background-position: 0 -500px;
+  }
+}
+
+h1 {
+  padding: 20px;
+  line-height: 1;
+}
+
+.game-box {
+  margin-top: 27px;
+  text-align: center;
+}
+
+.row {
+  padding: 5px;
+}
+
+.btn {
+  margin: 5px;
+  display: inline-block;
+  height: 120px;
+  width: 120px;
+  border: 2px solid rgb(204, 203, 203);
+  border-radius: 10px;
+  background-color: rgb(233, 233, 233);
+}
+
+.pressed {
+  box-shadow: 0 0 20px white;
+  background-color: rgb(93, 133, 103);
+}
