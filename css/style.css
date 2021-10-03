@@ -10,7 +10,7 @@ body {
 .bg-container /* used for presentation */ {
   /* width: 60vh;
   height: 60vh; */
-  display: inline-block;
+  display: flex;
   min-width: 520px;
   height: 485px;
   position: absolute;
@@ -60,9 +60,7 @@ h1 {
 }
 
 .game-box {
-  height: 300px;
-  margin-top: 27px;
-  text-align: center;
+  padding: 30px 48px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -70,13 +68,16 @@ h1 {
 }
 
 .row {
-  overflow: hidden;
-  width: 100%;
-  padding: 5px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .btn {
-  line-height: 8;
+  flex: 33;
+  padding: 31px;
+  line-height: 4;
+  max-width: 66px;
+  max-height: 66px;
   margin: 5px;
   display: inline-block;
   height: 120px;
@@ -88,8 +89,6 @@ h1 {
 }
 
 .btn:hover {
-  height: 125px;
-  width: 125px;
   background-color: rgb(252, 177, 255);
 }
 
