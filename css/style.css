@@ -8,15 +8,21 @@ body {
 }
 
 .bg-container /* used for presentation */ {
-  width: 60vh;
-  height: 60vh;
+  /* width: 60vh;
+  height: 60vh; */
+  display: inline-block;
+  min-width: 520px;
+  height: 485px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
   overflow: hidden;
   border: 1px solid rgb(121, 121, 121);
-  /* box-shadow: 0 20px 80px rgba(56, 56, 56, 0.7); */
+  box-shadow: -0.3px -0.3px 1.9px rgba(0, 0, 0, 0.021),
+    0.1px 0.1px 4.3px rgba(0, 0, 0, 0.03), 1.6px 1.5px 7.7px rgba(0, 0, 0, 0.037),
+    4.5px 4.4px 12.8px rgba(0, 0, 0, 0.043), 9.9px 9.6px 21.2px rgba(0, 0, 0, 0.05),
+    20.1px 19.6px 37px rgba(0, 0, 0, 0.059), 45px 44px 80px rgba(0, 0, 0, 0.08);
 }
 
 .bg-scroll {
@@ -48,20 +54,29 @@ body {
 }
 
 h1 {
+  position: relative;
   padding: 20px;
   line-height: 1;
 }
 
 .game-box {
+  height: 300px;
   margin-top: 27px;
   text-align: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .row {
+  overflow: hidden;
+  width: 100%;
   padding: 5px;
 }
 
 .btn {
+  line-height: 8;
   margin: 5px;
   display: inline-block;
   height: 120px;
@@ -69,9 +84,76 @@ h1 {
   border: 2px solid rgb(204, 203, 203);
   border-radius: 10px;
   background-color: rgb(233, 233, 233);
+  transition: background-color 0.8s;
+}
+
+.btn:hover {
+  height: 125px;
+  width: 125px;
+  background-color: rgb(252, 177, 255);
 }
 
 .pressed {
   box-shadow: 0 0 20px white;
-  background-color: rgb(93, 133, 103);
+  background-color: rgb(116, 116, 116);
+}
+
+@media screen and (max-height: 700px) {
+  h1 {
+    font-size: 1em;
+    padding: 0.5em;
+    margin-top: 20px;
+    position: relative;
+  }
+
+  h4 {
+    font-size: 10px;
+    position: relative;
+    display: inline;
+  }
+}
+
+.error {
+  background-color: rgb(226, 78, 78);
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+@keyframes error {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
 }
