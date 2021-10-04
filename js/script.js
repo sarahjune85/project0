@@ -3,8 +3,9 @@ const cells = $(".btn");
 const strategy = document.querySelector("#strategy");
 const restart = document.querySelector("#restart");
 const text = document.querySelector(".h4");
-
+let turnCount = 0;
 let spaces = [];
+let winLogger = [];
 
 const playerOne = "O";
 const playerTwo = "X";
@@ -12,18 +13,18 @@ let currentPlayer = playerOne;
 
 $(document).ready(function () {
   // on keypress game start function - fix later:
-  // $(document).on("keypress", function () {
-  //   $("h4").text("GO GO GO");
-  //   // startGame();
-  //   started = true;
-  //   console.log("array: " + spaces);
-  // });
+  $(document).on("keypress", function () {
+    $("h4").text("GO GO GO");
+    // startGame();
+    // started = true;
+  });
 
   //function startGame() {}
 
   $("#restart").on("click", function () {
     started = false;
     spaces = [];
+    turnCount = 0;
     $("h4").text("a battle of wits...");
     $(".btn").html(":|");
 
@@ -57,16 +58,19 @@ $(document).ready(function () {
       console.log(spaces[cellID] + " " + cellID);
       $("#" + cellID).html(`${currentPlayer}`);
       console.log(spaces);
+      turnCount++;
+
+      console.log("turnCount:" + turnCount);
 
       if (winner()) {
         $("h4").text(`${currentPlayer} has won!`);
-        // startOver();
+        // game box div display bird or bread
+        return;
+      } else if (turnCount === 9 && !winner()) {
+        $("h4").text(`Draw`);
         return;
       }
 
-      // if (playerDraw()) {
-      //   return;
-      // }
       // player switch - ternary to flick between:
       currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
     } else {
@@ -86,41 +90,25 @@ $(document).ready(function () {
     if (spaces[0] === currentPlayer) {
       if (spaces[1] === currentPlayer && spaces[2] === currentPlayer) {
         console.log("top line winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
+
         return true;
       }
       // 0, 3 and 6 - left
       if (spaces[3] === currentPlayer && spaces[6] === currentPlayer) {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("left side winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
         return true;
       }
       // 0, 4 and 8 - diagonal top left to bottom right
       if (spaces[4] === currentPlayer && spaces[8] === currentPlayer) {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("diagonal top left winner");
-        return true;
-      }
-    }
-    // Anchor at 4:
-    // 2, 4 and 6 - diagonal top right to bottom left:
-    if (spaces[4] === currentPlayer) {
-      if (spaces[2] === currentPlayer && spaces[6] === currentPlayer) {
-        $("h4").text(`${currentPlayer} has won!`);
-        console.log("diagonal top right winner");
-        return true;
-      }
-
-      // 1, 4 and 7 - middle line vertical:
-      if (spaces[1] === currentPlayer && spaces[7] === currentPlayer) {
-        $("h4").text(`${currentPlayer} has won!`);
-        console.log("middle line vertical winner");
-        return true;
-      }
-
-      // 3, 4 and 5 - middle line horizontal:
-      if (spaces[1] === currentPlayer && spaces[7] === currentPlayer) {
-        $("h4").text(`${currentPlayer} has won!`);
-        console.log("middle line horizontal winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
         return true;
       }
     }
@@ -131,6 +119,8 @@ $(document).ready(function () {
       if (spaces[2] === currentPlayer && spaces[5] === currentPlayer) {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("right side winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
         return true;
       }
 
@@ -138,8 +128,46 @@ $(document).ready(function () {
       if (spaces[6] === currentPlayer && spaces[7] === currentPlayer) {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("bottom line winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
+        return true;
+      }
+    }
+
+    // Anchor at 4:
+    // 2, 4 and 6 - diagonal top right to bottom left:
+    if (spaces[4] === currentPlayer) {
+      if (spaces[2] === currentPlayer && spaces[6] === currentPlayer) {
+        $("h4").text(`${currentPlayer} has won!`);
+        console.log("diagonal top right winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
+        return true;
+      }
+
+      // 1, 4 and 7 - middle line vertical:
+      if (spaces[1] === currentPlayer && spaces[7] === currentPlayer) {
+        $("h4").text(`${currentPlayer} has won!`);
+        console.log("middle line vertical winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
+        return true;
+      }
+
+      // 3, 4 and 5 - middle line horizontal:
+      if (spaces[3] === currentPlayer && spaces[5] === currentPlayer) {
+        $("h4").text(`${currentPlayer} has won!`);
+        console.log("middle line horizontal winner");
+        winLogger.push(currentPlayer);
+        console.log("wins: " + winLogger);
         return true;
       }
     }
   }
+
+  // const words = ["spray", "limit", "elite", "exuberant", "destruction", "present"];
+  const playerOneWins = winLogger.filter((word) => word === "O");
+
+  console.log(playerOneWins);
+  // expected output: Array ["exuberant", "destruction", "present"]
 });
