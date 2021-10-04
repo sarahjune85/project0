@@ -62,10 +62,11 @@ body {
   }
 }
 
-h1 {
+h1,
+h5 {
   position: relative;
   padding: 20px;
-  line-height: 1;
+  line-height: 3;
 }
 
 .game-box {
@@ -74,6 +75,11 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.bird {
+  margin: 0 auto;
+  display: block;
 }
 
 .row {
@@ -106,12 +112,27 @@ h1 {
   background-color: rgb(116, 116, 116);
 }
 
+.restart-button {
+  font-family: "Press Start 2P", cursive;
+  border-radius: 27px;
+  position: absolute;
+  top: 81%;
+  left: 37%;
+  padding: 14px;
+}
+
+.playerOne,
+.playerTwo {
+  line-height: 2;
+}
+
 .hide {
   display: none;
 }
 
+/* fix me */
 @media screen and (max-height: 700px) {
-  h1 {
+  /* h1 {
     font-size: 1em;
     padding: 0.5em;
     margin-top: 20px;
@@ -122,7 +143,7 @@ h1 {
     font-size: 10px;
     position: relative;
     display: inline;
-  }
+  } */
 }
 
 .error {

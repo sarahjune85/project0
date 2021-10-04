@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////
 const cells = $(".btn");
-const strategy = document.querySelector("#strategy");
-const restart = document.querySelector("#restart");
-const text = document.querySelector(".h4");
+// const strategy = document.querySelector("#strategy");
+// const restart = document.querySelector("#restart");
+// const text = document.querySelector(".h4");
 let turnCount = 0;
 let spaces = [];
 let winLogger = [];
@@ -11,24 +11,72 @@ const playerOne = "O";
 const playerTwo = "X";
 let currentPlayer = playerOne;
 
+// bird character selection:
+const birdimages = new Array(); // create new array to preload images
+birdimages[0] = new Image(); // create new instance of image object
+birdimages[0].src = "img/bird1.png"; // set image src property to image path, preloading image in the process
+birdimages[1] = new Image();
+birdimages[1].src = "img/bird2.png";
+// birdimages[2] = new Image();
+// birdimages[2].src = "thirdcar.gif";
+
 $(document).ready(function () {
-  // on keypress game start function - fix later:
+  $(".score").addClass("hide");
+  $(".restart-button").addClass("hide");
+  $("h5").addClass("hide");
+
+  // on keypress game start function:
   $(document).on("keypress", function () {
-    $("h4").text("GO GO GO");
-    // startGame();
-    // started = true;
+    turnCount = 0;
+    spaces = [];
+    currentPlayer = playerOne;
+    $(".btn").html("🍞");
+    $(".game-box").removeClass("hide");
+    $("h5").removeClass("hide");
+    // $(".restart-button").removeClass("hide");
+    $(".splash").addClass("hide");
   });
 
-  //function startGame() {}
+  function stopGame() {
+    $(".picker").addClass("hide");
+    setTimeout(function () {
+      $(".game-box").addClass("hide");
+    }, 700);
 
-  $("#restart").on("click", function () {
-    started = false;
-    spaces = [];
-    turnCount = 0;
-    $("h4").text("a battle of wits...");
-    $(".btn").html(":|");
+    setTimeout(function () {
+      $(".splash").removeClass("hide");
+    }, 700);
+    let playerOneWins = winLogger.filter((word) => word === "O");
+    let playerTwoWins = winLogger.filter((word) => word === "X");
+    $(".playerOne").text(`Player O: ${playerOneWins.length}`);
+    $(".playerTwo").text(`Player X: ${playerTwoWins.length}`);
+    console.log("win log: " + playerOneWins.toString() + ", " + playerTwoWins.toString());
+  }
 
-    console.log("testing restart");
+  // $("#restart").on("click", function () {
+  //   started = false;
+  //   spaces = [];
+  //   turnCount = 0;
+  //   $(".btn").html("🥚");
+  //   restartGame();
+  //   console.log("restarting");
+  // });
+
+  // TODO: this
+  ///////// somehow have to put this picked bird src into the cell html:
+  $("#arrowleft").on("click", function () {
+    for (let i = 0; i < birdimages.length; i--) {
+      $(".bird").attr("src", birdimages[i].src);
+      let pickedBird = birdimages[i].src;
+      console.log(pickedBird);
+    }
+  });
+  $("#arrowright").on("click", function () {
+    for (let i = 0; i < birdimages.length; i++) {
+      $(".bird").attr("src", birdimages[i].src);
+      let pickedBird = birdimages[i].src;
+      console.log(pickedBird);
+    }
   });
 
   $(".btn").click(function () {
@@ -55,19 +103,20 @@ $(document).ready(function () {
         $("#" + cellID).removeClass("pressed");
       }, 200);
       spaces[cellID] = currentPlayer;
-      console.log(spaces[cellID] + " " + cellID);
+      //console.log(spaces[cellID] + " " + cellID);
       $("#" + cellID).html(`${currentPlayer}`);
-      console.log(spaces);
       turnCount++;
 
       console.log("turnCount:" + turnCount);
 
       if (winner()) {
         $("h4").text(`${currentPlayer} has won!`);
-        // game box div display bird or bread
+        ///////////// This needs to kill .btn function!!
+        stopGame();
         return;
       } else if (turnCount === 9 && !winner()) {
         $("h4").text(`Draw`);
+        stopGame();
         return;
       }
 
@@ -91,8 +140,6 @@ $(document).ready(function () {
       if (spaces[1] === currentPlayer && spaces[2] === currentPlayer) {
         console.log("top line winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
-
         return true;
       }
       // 0, 3 and 6 - left
@@ -100,7 +147,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("left side winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
         return true;
       }
       // 0, 4 and 8 - diagonal top left to bottom right
@@ -108,7 +154,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("diagonal top left winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
         return true;
       }
     }
@@ -120,7 +165,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("right side winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
         return true;
       }
 
@@ -129,7 +173,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("bottom line winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
         return true;
       }
     }
@@ -141,7 +184,7 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("diagonal top right winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
+
         return true;
       }
 
@@ -150,7 +193,7 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("middle line vertical winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
+
         return true;
       }
 
@@ -159,15 +202,9 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("middle line horizontal winner");
         winLogger.push(currentPlayer);
-        console.log("wins: " + winLogger);
+
         return true;
       }
     }
   }
-
-  // const words = ["spray", "limit", "elite", "exuberant", "destruction", "present"];
-  const playerOneWins = winLogger.filter((word) => word === "O");
-
-  console.log(playerOneWins);
-  // expected output: Array ["exuberant", "destruction", "present"]
 });
