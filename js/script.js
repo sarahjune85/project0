@@ -1,15 +1,11 @@
 ///////////////////////////////////////////////////////
 const cells = $(".btn");
-// const strategy = document.querySelector("#strategy");
-// const restart = document.querySelector("#restart");
-// const text = document.querySelector(".h4");
+
 let turnCount = 0;
 let spaces = [];
 let winLogger = [];
-
-const playerOne = "O";
-const playerTwo = "X";
-let currentPlayer = playerOne;
+let pickedBird = "";
+let pickedBread = "";
 
 // bird character selection:
 const birdimages = new Array(); // create new array to preload images
@@ -25,10 +21,31 @@ $(document).ready(function () {
   $(".restart-button").addClass("hide");
   $("h5").addClass("hide");
 
+  $("#arrowleft").on("click", function () {
+    for (let i = 0; i < birdimages.length; i--) {
+      $(".bird").attr("src", birdimages[i].src);
+      pickedBird = birdimages[i].src;
+      console.log(pickedBird);
+    }
+  });
+  $("#arrowright").on("click", function () {
+    for (let i = 0; i < birdimages.length; i++) {
+      $(".bird").attr("src", birdimages[i].src);
+      pickedBird = birdimages[i].src;
+      console.log("picked bird: " + pickedBird);
+    }
+  });
+
+  var playerOne = pickedBird;
+  var playerTwo = "";
+  let currentPlayer = playerOne;
+  console.log(playerOne);
+
   // on keypress game start function:
   $(document).on("keypress", function () {
     turnCount = 0;
     spaces = [];
+    // let playerOne = birdimages[0].src;
     currentPlayer = playerOne;
     $(".btn").html("🍞");
     $(".game-box").removeClass("hide");
@@ -36,22 +53,6 @@ $(document).ready(function () {
     // $(".restart-button").removeClass("hide");
     $(".splash").addClass("hide");
   });
-
-  function stopGame() {
-    $(".picker").addClass("hide");
-    setTimeout(function () {
-      $(".game-box").addClass("hide");
-    }, 700);
-
-    setTimeout(function () {
-      $(".splash").removeClass("hide");
-    }, 700);
-    let playerOneWins = winLogger.filter((word) => word === "O");
-    let playerTwoWins = winLogger.filter((word) => word === "X");
-    $(".playerOne").text(`Player O: ${playerOneWins.length}`);
-    $(".playerTwo").text(`Player X: ${playerTwoWins.length}`);
-    console.log("win log: " + playerOneWins.toString() + ", " + playerTwoWins.toString());
-  }
 
   // $("#restart").on("click", function () {
   //   started = false;
@@ -64,20 +65,6 @@ $(document).ready(function () {
 
   // TODO: this
   ///////// somehow have to put this picked bird src into the cell html:
-  $("#arrowleft").on("click", function () {
-    for (let i = 0; i < birdimages.length; i--) {
-      $(".bird").attr("src", birdimages[i].src);
-      let pickedBird = birdimages[i].src;
-      console.log(pickedBird);
-    }
-  });
-  $("#arrowright").on("click", function () {
-    for (let i = 0; i < birdimages.length; i++) {
-      $(".bird").attr("src", birdimages[i].src);
-      let pickedBird = birdimages[i].src;
-      console.log(pickedBird);
-    }
-  });
 
   $(".btn").click(function () {
     let chosenCell = $(this).attr("id");
@@ -103,14 +90,16 @@ $(document).ready(function () {
         $("#" + cellID).removeClass("pressed");
       }, 200);
       spaces[cellID] = currentPlayer;
-      //console.log(spaces[cellID] + " " + cellID);
-      $("#" + cellID).html(`${currentPlayer}`);
+
+      $("#" + cellID).html("<img src=" + currentPlayer + ">");
+      // $("#" + cellID).html(`${currentPlayer}`);
       turnCount++;
 
       console.log("turnCount:" + turnCount);
 
       if (winner()) {
-        $("h4").text(`${currentPlayer} has won!`);
+        $("h4").html("<img src=" + currentPlayer + "> has won!");
+        // TODO
         ///////////// This needs to kill .btn function!!
         stopGame();
         return;
@@ -131,6 +120,22 @@ $(document).ready(function () {
         $("#" + cellID).removeClass("error");
       }, 200);
     }
+  }
+
+  function stopGame() {
+    $(".picker").addClass("hide");
+    setTimeout(function () {
+      $(".game-box").addClass("hide");
+    }, 700);
+
+    setTimeout(function () {
+      $(".splash").removeClass("hide");
+    }, 700);
+    let playerOneWins = winLogger.filter((word) => word === "O");
+    let playerTwoWins = winLogger.filter((word) => word === "X");
+    $(".playerOne").text(`Player O: ${playerOneWins.length}`);
+    $(".playerTwo").text(`Player X: ${playerTwoWins.length}`);
+    console.log("win log: " + playerOneWins.toString() + ", " + playerTwoWins.toString());
   }
 
   function winner() {

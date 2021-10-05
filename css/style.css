@@ -77,9 +77,22 @@ h5 {
   right: 0;
 }
 
-.bird {
+.bird,
+.bread {
   margin: 0 auto;
   display: block;
+}
+
+.bird-selector {
+  position: absolute;
+  top: 64%;
+  left: 24%;
+}
+
+.bread-selector {
+  position: absolute;
+  top: 64%;
+  left: 58%;
 }
 
 .row {
@@ -99,7 +112,7 @@ h5 {
   width: 120px;
   border: 2px solid rgb(204, 203, 203);
   border-radius: 10px;
-  background-color: rgb(233, 233, 233);
+  background-color: rgb(255, 255, 255);
   transition: background-color 0.8s;
 }
 
