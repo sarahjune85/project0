@@ -144,12 +144,6 @@ $(document).ready(function () {
       currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
     } else {
       playSound("error");
-
-      // shake not working for div - will use for pics inside though:
-      $("#" + cellID).addClass("error");
-      setTimeout(function () {
-        $("#" + cellID).removeClass("error");
-      }, 200);
     }
   }
 
@@ -158,6 +152,7 @@ $(document).ready(function () {
     $(".btn").css("pointer-events", "none");
     $(".picker").addClass("hide");
     $("h5").removeClass("hide");
+    $("h5").html("Press any key to restart.");
     setTimeout(function () {
       $(".game-box").addClass("hide");
     }, 1000);
