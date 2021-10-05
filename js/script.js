@@ -6,6 +6,9 @@ let spaces = [];
 let winLogger = [];
 let pickedBird = "";
 let pickedBread = "";
+var playerOne = "";
+var playerTwo = "X";
+let currentPlayer = "";
 
 // bird character selection:
 const birdimages = new Array(); // create new array to preload images
@@ -21,32 +24,61 @@ $(document).ready(function () {
   $(".restart-button").addClass("hide");
   $("h5").addClass("hide");
 
-  $("#arrowleft").on("click", function () {
-    for (let i = 0; i < birdimages.length; i--) {
-      $(".bird").attr("src", birdimages[i].src);
+  let i = 0;
+  $(".bird").attr("src", birdimages[0].src);
+
+  $("#arrowleftbird").on("click", function () {
+    if (i > 0 && i <= birdimages.length - 1) {
+      i--;
       pickedBird = birdimages[i].src;
-      console.log(pickedBird);
-    }
-  });
-  $("#arrowright").on("click", function () {
-    for (let i = 0; i < birdimages.length; i++) {
       $(".bird").attr("src", birdimages[i].src);
-      pickedBird = birdimages[i].src;
       console.log("picked bird: " + pickedBird);
+      playerOne = pickedBird;
+      console.log("current: " + currentPlayer);
+      console.log(playerOne);
     }
   });
 
-  var playerOne = pickedBird;
-  var playerTwo = "";
-  let currentPlayer = playerOne;
-  console.log(playerOne);
+  $("#arrowrightbird").on("click", function () {
+    if (i >= 0 && i < birdimages.length - 1) {
+      i++;
+      pickedBird = birdimages[i].src;
+      $(".bird").attr("src", birdimages[i].src);
+      console.log("picked bird: " + pickedBird);
+      playerOne = pickedBird;
+      console.log(playerOne);
+    }
+  });
+
+  // $("#arrowleft").on("click", function () {
+  //   for (let i = 0; i < birdimages.length; i--) {
+  //     $(".bird").attr("src", birdimages[i].src);
+  //     pickedBird = birdimages[i].src;
+  //     console.log("picked bird: " + pickedBird);
+  //   }
+  // });
+  // $("#arrowright").on("click", function () {
+  //   for (let i = 0; i < birdimages.length; i++) {
+  //     $(".bird").attr("src", birdimages[i].src);
+  //     pickedBird = birdimages[i].src;
+  //     console.log("picked bird: " + pickedBird);
+  //   }
+  // });
+
+  // var playerOne = pickedBird;
+  // var playerTwo = "";
+  // let currentPlayer = playerOne;
+  // console.log("current: " + currentPlayer);
+
+  // console.log(playerOne);
 
   // on keypress game start function:
   $(document).on("keypress", function () {
+    currentPlayer = playerOne;
     turnCount = 0;
     spaces = [];
     // let playerOne = birdimages[0].src;
-    currentPlayer = playerOne;
+    //currentPlayer = playerOne;
     $(".btn").html("🍞");
     $(".game-box").removeClass("hide");
     $("h5").removeClass("hide");
