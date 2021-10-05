@@ -1,84 +1,68 @@
 ///////////////////////////////////////////////////////
-// globals:
+// Globals:
 let turnCount = 0;
 let spaces = [];
 let winLogger = [];
-var playerOne = "";
-var playerTwo = "";
+let playerOne = "";
+let playerTwo = "";
 let currentPlayer = "";
 
-// bird character selection:
-const birdimages = new Array(); // create new array to preload images
-birdimages[0] = new Image(); // create new instance of image object
-birdimages[0].src = "img/bird1.png"; // set image src property to image path, preloads image in the process
-birdimages[1] = new Image();
-birdimages[1].src = "img/bird2.png";
-birdimages[2] = new Image();
-birdimages[2].src = "img/bird3.png";
-birdimages[3] = new Image();
-birdimages[3].src = "img/bird4.png";
-birdimages[4] = new Image();
-birdimages[4].src = "img/bird5.png";
+// bird character selection - image src array:
+const birdimages = [];
+for (let i = 0; i < 5; i++) {
+  birdimages[i] = new Image().src = `img/bird${i + 1}.png`;
+}
 
 // bread character selection:
-const breadimages = new Array();
-breadimages[0] = new Image();
-breadimages[0].src = "img/bread1.png";
-breadimages[1] = new Image();
-breadimages[1].src = "img/bread2.png";
-breadimages[2] = new Image();
-breadimages[2].src = "img/bread3.png";
-breadimages[3] = new Image();
-breadimages[3].src = "img/bread4.png";
-breadimages[4] = new Image();
-breadimages[4].src = "img/bread5.png";
+const breadimages = [];
+for (let i = 0; i < 5; i++) {
+  breadimages[i] = new Image().src = `img/bread${i + 1}.png`;
+}
 
 // On page load - initialise splash screen and character select:
 $(document).ready(function () {
-  $(".score").addClass("hide");
-  $(".restart-button").addClass("hide");
+  $(".score").hide();
+  $(".game-box").hide();
 
+  // bird character selection assigned to playerOne - default is position 0.
   let i = 0;
-  playerOne = birdimages[0].src;
-  $(".bird").attr({ src: birdimages[i].src, width: 90 });
+  playerOne = birdimages[0];
+  $(".bird").attr({ src: birdimages[i], width: 90 });
 
   $("#arrowleftbird").on("click", function () {
     if (i > 0 && i <= birdimages.length - 1) {
       i--;
-      playerOne = birdimages[i].src;
-      $(".bird").attr({ src: birdimages[i].src, width: 90 });
-      console.log(playerOne);
+      playerOne = birdimages[i];
+      $(".bird").attr({ src: birdimages[i], width: 90 });
     }
   });
 
   $("#arrowrightbird").on("click", function () {
     if (i >= 0 && i < birdimages.length - 1) {
       i++;
-      playerOne = birdimages[i].src;
-      $(".bird").attr({ src: birdimages[i].src, width: 90 });
-      console.log(playerOne);
+      playerOne = birdimages[i];
+      $(".bird").attr({ src: birdimages[i], width: 90 });
     }
   });
 
+  // bread character selection assigned to playerTwo:
   let j = 0;
-  playerTwo = breadimages[0].src;
-  $(".bread").attr({ src: breadimages[j].src, width: 90 });
+  playerTwo = breadimages[0];
+  $(".bread").attr({ src: breadimages[j], width: 90 });
 
   $("#arrowleftbread").on("click", function () {
     if (j > 0 && j <= breadimages.length - 1) {
       j--;
-      playerTwo = breadimages[j].src;
-      $(".bread").attr({ src: breadimages[j].src, width: 90 });
-      console.log(playerTwo);
+      playerTwo = breadimages[j];
+      $(".bread").attr({ src: breadimages[j], width: 90 });
     }
   });
 
   $("#arrowrightbread").on("click", function () {
     if (j >= 0 && j < breadimages.length - 1) {
       j++;
-      playerTwo = breadimages[j].src;
-      $(".bread").attr({ src: breadimages[j].src, width: 90 });
-      console.log(playerTwo);
+      playerTwo = breadimages[j];
+      $(".bread").attr({ src: breadimages[j], width: 90 });
     }
   });
 
@@ -88,16 +72,15 @@ $(document).ready(function () {
     turnCount = 0;
     spaces = [];
     $(".btn").html(" ");
-    $(".game-box").removeClass("hide");
-    $("h5").addClass("hide");
-    // $("h5").removeClass("hide");
-    $(".splash").addClass("hide");
-    $("p").addClass("hide");
-    $(".score").removeClass("hide");
+    $(".game-box").show();
+    $("h5").hide();
+    $(".splash").hide();
+    $("p").hide();
+    $(".score").show();
     $(".btn").css("pointer-events", "auto");
   });
 
-  // Button click - animates, passes to clicked func:
+  // Button click - animates, passes cell to clicked func:
   $(".btn").click(function () {
     let chosenCell = $(this).attr("id");
     $("#" + chosenCell)
@@ -126,8 +109,6 @@ $(document).ready(function () {
       $("#" + cellID).html("<img src=" + currentPlayer + " width=70>");
       turnCount++;
 
-      console.log("turnCount:" + turnCount);
-
       if (winner()) {
         playSound("bell");
         $("h4").html("<img src=" + currentPlayer + " width=70> has won!");
@@ -149,22 +130,24 @@ $(document).ready(function () {
   function stopGame() {
     // button killer:
     $(".btn").css("pointer-events", "none");
-    $(".picker").addClass("hide");
-    $("h5").removeClass("hide");
+    $(".picker").hide();
+    $("h5").show();
     $("h5").html("Press any key to restart.");
+
+    // returns to splash screen:
     setTimeout(function () {
-      $(".game-box").addClass("hide");
+      $(".game-box").hide();
     }, 1000);
 
     setTimeout(function () {
-      $(".splash").removeClass("hide");
+      $(".splash").show();
     }, 1000);
 
+    // filter() gathers # wins for each player:
     let playerOneWins = winLogger.filter((e) => e === playerOne);
     let playerTwoWins = winLogger.filter((e) => e === playerTwo);
     $(".playerOne").text(`P1: ${playerOneWins.length}`);
     $(".playerTwo").text(`P2: ${playerTwoWins.length}`);
-    console.log("win log: " + playerOneWins.toString() + ", " + playerTwoWins.toString());
   }
 
   function winner() {

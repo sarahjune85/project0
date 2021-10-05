@@ -151,10 +151,6 @@ h5 {
   line-height: 3;
 }
 
-.hide {
-  display: none;
-}
-
 .pulsate {
   animation: pulsate 3s ease-out;
   animation-iteration-count: infinite;
