@@ -11,7 +11,6 @@ body {
   top: 0;
   left: 0;
   z-index: 1;
-  border: 1px solid rgb(185, 42, 42);
 }
 
 .splash,
@@ -45,7 +44,7 @@ body {
   left: -25%;
   /* linear gradient with alpha to alter image opacity */
   background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
-    url("../img/leaves.png") repeat;
+    url("../img/memphis.png") repeat;
   animation: backgroundScroll 25s linear infinite;
   transform: rotate(12deg) scale(1);
   transform-origin: center center;
@@ -62,11 +61,21 @@ body {
   }
 }
 
-h1,
-h5 {
+h1 {
   position: relative;
-  padding: 20px;
+  padding: 16px;
   line-height: 3;
+}
+
+h5 {
+  position: absolute;
+  top: 84%;
+  left: 21%;
+}
+
+.press-start {
+  position: relative;
+  top: 44%;
 }
 
 .game-box {
@@ -85,13 +94,13 @@ h5 {
 
 .bird-selector {
   position: absolute;
-  top: 64%;
+  top: 49%;
   left: 24%;
 }
 
 .bread-selector {
   position: absolute;
-  top: 64%;
+  top: 49%;
   left: 58%;
 }
 
@@ -124,7 +133,7 @@ h5 {
   box-shadow: 0 0 20px white;
   background-color: rgb(116, 116, 116);
 }
-
+/* 
 .restart-button {
   font-family: "Press Start 2P", cursive;
   border-radius: 27px;
@@ -132,11 +141,20 @@ h5 {
   top: 81%;
   left: 37%;
   padding: 14px;
-}
+} */
 
 .playerOne,
 .playerTwo {
   line-height: 2;
+}
+
+.scorebox {
+  position: relative;
+  top: 3%;
+}
+
+.score {
+  line-height: 3;
 }
 
 .hide {
@@ -201,5 +219,22 @@ h5 {
   }
   100% {
     transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+.pulsate {
+  animation: pulsate 3s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0.5;
+}
+@keyframes pulsate {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
   }
 }

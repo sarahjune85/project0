@@ -1,13 +1,11 @@
 ///////////////////////////////////////////////////////
-const cells = $(".btn");
+//const cells = $(".btn");
 
 let turnCount = 0;
 let spaces = [];
 let winLogger = [];
-let pickedBird = "";
-let pickedBread = "";
 var playerOne = "";
-var playerTwo = "X";
+var playerTwo = "";
 let currentPlayer = "";
 
 // bird character selection:
@@ -16,8 +14,12 @@ birdimages[0] = new Image(); // create new instance of image object
 birdimages[0].src = "img/bird1.png"; // set image src property to image path, preloads image in the process
 birdimages[1] = new Image();
 birdimages[1].src = "img/bird2.png";
-// birdimages[2] = new Image();
-// birdimages[2].src = "thirdcar.gif";
+birdimages[2] = new Image();
+birdimages[2].src = "img/bird3.png";
+birdimages[3] = new Image();
+birdimages[3].src = "img/bird4.png";
+birdimages[4] = new Image();
+birdimages[4].src = "img/bird5.png";
 
 // bread character selection:
 const breadimages = new Array();
@@ -25,22 +27,27 @@ breadimages[0] = new Image();
 breadimages[0].src = "img/bread1.png";
 breadimages[1] = new Image();
 breadimages[1].src = "img/bread2.png";
+breadimages[2] = new Image();
+breadimages[2].src = "img/bread3.png";
+breadimages[3] = new Image();
+breadimages[3].src = "img/bread4.png";
+breadimages[4] = new Image();
+breadimages[4].src = "img/bread5.png";
 
 // On page load - initialise splash screen and character select:
 $(document).ready(function () {
   $(".score").addClass("hide");
   $(".restart-button").addClass("hide");
-  $("h5").addClass("hide");
 
   let i = 0;
   playerOne = birdimages[0].src;
-  $(".bird").attr("src", birdimages[0].src);
+  $(".bird").attr({ src: birdimages[i].src, width: 90 });
 
   $("#arrowleftbird").on("click", function () {
     if (i > 0 && i <= birdimages.length - 1) {
       i--;
       playerOne = birdimages[i].src;
-      $(".bird").attr("src", birdimages[i].src);
+      $(".bird").attr({ src: birdimages[i].src, width: 90 });
       console.log(playerOne);
     }
   });
@@ -49,20 +56,20 @@ $(document).ready(function () {
     if (i >= 0 && i < birdimages.length - 1) {
       i++;
       playerOne = birdimages[i].src;
-      $(".bird").attr("src", birdimages[i].src);
+      $(".bird").attr({ src: birdimages[i].src, width: 90 });
       console.log(playerOne);
     }
   });
 
   let j = 0;
   playerTwo = breadimages[0].src;
-  $(".bread").attr("src", breadimages[0].src);
+  $(".bread").attr({ src: breadimages[j].src, width: 90 });
 
   $("#arrowleftbread").on("click", function () {
     if (j > 0 && j <= breadimages.length - 1) {
       j--;
       playerTwo = breadimages[j].src;
-      $(".bread").attr("src", breadimages[j].src);
+      $(".bread").attr({ src: breadimages[j].src, width: 90 });
       console.log(playerTwo);
     }
   });
@@ -71,20 +78,24 @@ $(document).ready(function () {
     if (j >= 0 && j < breadimages.length - 1) {
       j++;
       playerTwo = breadimages[j].src;
-      $(".bread").attr("src", breadimages[j].src);
+      $(".bread").attr({ src: breadimages[j].src, width: 90 });
       console.log(playerTwo);
     }
   });
 
-  // On keypress - game start:
+  // On keypress - game start/restart. clears variables/splash:
   $(document).on("keypress", function () {
     currentPlayer = playerOne;
     turnCount = 0;
     spaces = [];
-    $(".btn").html("🍞");
+    $(".btn").html(" ");
     $(".game-box").removeClass("hide");
-    $("h5").removeClass("hide");
+    $("h5").addClass("hide");
+    // $("h5").removeClass("hide");
     $(".splash").addClass("hide");
+    $("p").addClass("hide");
+    $(".score").removeClass("hide");
+    $(".btn").css("pointer-events", "auto");
   });
 
   // Button click - adds player to spaces array, animates:
@@ -106,22 +117,21 @@ $(document).ready(function () {
   function clicked(cellID) {
     // if cellID in spaces array is empty, add player token:
     if (!spaces[cellID]) {
-      playSound("blip");
+      playSound("tap");
       $("#" + cellID).addClass("pressed");
       setTimeout(function () {
         $("#" + cellID).removeClass("pressed");
       }, 200);
       spaces[cellID] = currentPlayer;
 
-      $("#" + cellID).html("<img src=" + currentPlayer + ">");
+      $("#" + cellID).html("<img src=" + currentPlayer + " width=70>");
       turnCount++;
 
       console.log("turnCount:" + turnCount);
 
       if (winner()) {
-        $("h4").html("<img src=" + currentPlayer + "> has won!");
-        // TODO
-        ///////////// This needs to kill .btn function!!
+        playSound("bell");
+        $("h4").html("<img src=" + currentPlayer + " width=70> has won!");
         stopGame();
         return;
       } else if (turnCount === 9 && !winner()) {
@@ -144,19 +154,22 @@ $(document).ready(function () {
   }
 
   function stopGame() {
+    // button killer:
+    $(".btn").css("pointer-events", "none");
     $(".picker").addClass("hide");
+    $("h5").removeClass("hide");
     setTimeout(function () {
       $(".game-box").addClass("hide");
-    }, 700);
+    }, 1000);
 
     setTimeout(function () {
       $(".splash").removeClass("hide");
-    }, 700);
+    }, 1000);
 
     let playerOneWins = winLogger.filter((e) => e === playerOne);
     let playerTwoWins = winLogger.filter((e) => e === playerTwo);
-    $(".playerOne").text(`Player 1: ${playerOneWins.length}`);
-    $(".playerTwo").text(`Player 2: ${playerTwoWins.length}`);
+    $(".playerOne").text(`P1: ${playerOneWins.length}`);
+    $(".playerTwo").text(`P2: ${playerTwoWins.length}`);
     console.log("win log: " + playerOneWins.toString() + ", " + playerTwoWins.toString());
   }
 
@@ -211,7 +224,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("diagonal top right winner");
         winLogger.push(currentPlayer);
-
         return true;
       }
 
@@ -220,7 +232,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("middle line vertical winner");
         winLogger.push(currentPlayer);
-
         return true;
       }
 
@@ -229,7 +240,6 @@ $(document).ready(function () {
         $("h4").text(`${currentPlayer} has won!`);
         console.log("middle line horizontal winner");
         winLogger.push(currentPlayer);
-
         return true;
       }
     }
