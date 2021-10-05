@@ -13,28 +13,34 @@ let currentPlayer = "";
 // bird character selection:
 const birdimages = new Array(); // create new array to preload images
 birdimages[0] = new Image(); // create new instance of image object
-birdimages[0].src = "img/bird1.png"; // set image src property to image path, preloading image in the process
+birdimages[0].src = "img/bird1.png"; // set image src property to image path, preloads image in the process
 birdimages[1] = new Image();
 birdimages[1].src = "img/bird2.png";
 // birdimages[2] = new Image();
 // birdimages[2].src = "thirdcar.gif";
 
+// bread character selection:
+const breadimages = new Array();
+breadimages[0] = new Image();
+breadimages[0].src = "img/bread1.png";
+breadimages[1] = new Image();
+breadimages[1].src = "img/bread2.png";
+
+// On page load - initialise splash screen and character select:
 $(document).ready(function () {
   $(".score").addClass("hide");
   $(".restart-button").addClass("hide");
   $("h5").addClass("hide");
 
   let i = 0;
+  playerOne = birdimages[0].src;
   $(".bird").attr("src", birdimages[0].src);
 
   $("#arrowleftbird").on("click", function () {
     if (i > 0 && i <= birdimages.length - 1) {
       i--;
-      pickedBird = birdimages[i].src;
+      playerOne = birdimages[i].src;
       $(".bird").attr("src", birdimages[i].src);
-      console.log("picked bird: " + pickedBird);
-      playerOne = pickedBird;
-      console.log("current: " + currentPlayer);
       console.log(playerOne);
     }
   });
@@ -42,72 +48,56 @@ $(document).ready(function () {
   $("#arrowrightbird").on("click", function () {
     if (i >= 0 && i < birdimages.length - 1) {
       i++;
-      pickedBird = birdimages[i].src;
+      playerOne = birdimages[i].src;
       $(".bird").attr("src", birdimages[i].src);
-      console.log("picked bird: " + pickedBird);
-      playerOne = pickedBird;
       console.log(playerOne);
     }
   });
 
-  // $("#arrowleft").on("click", function () {
-  //   for (let i = 0; i < birdimages.length; i--) {
-  //     $(".bird").attr("src", birdimages[i].src);
-  //     pickedBird = birdimages[i].src;
-  //     console.log("picked bird: " + pickedBird);
-  //   }
-  // });
-  // $("#arrowright").on("click", function () {
-  //   for (let i = 0; i < birdimages.length; i++) {
-  //     $(".bird").attr("src", birdimages[i].src);
-  //     pickedBird = birdimages[i].src;
-  //     console.log("picked bird: " + pickedBird);
-  //   }
-  // });
+  let j = 0;
+  playerTwo = breadimages[0].src;
+  $(".bread").attr("src", breadimages[0].src);
 
-  // var playerOne = pickedBird;
-  // var playerTwo = "";
-  // let currentPlayer = playerOne;
-  // console.log("current: " + currentPlayer);
+  $("#arrowleftbread").on("click", function () {
+    if (j > 0 && j <= breadimages.length - 1) {
+      j--;
+      playerTwo = breadimages[j].src;
+      $(".bread").attr("src", breadimages[j].src);
+      console.log(playerTwo);
+    }
+  });
 
-  // console.log(playerOne);
+  $("#arrowrightbread").on("click", function () {
+    if (j >= 0 && j < breadimages.length - 1) {
+      j++;
+      playerTwo = breadimages[j].src;
+      $(".bread").attr("src", breadimages[j].src);
+      console.log(playerTwo);
+    }
+  });
 
-  // on keypress game start function:
+  // On keypress - game start:
   $(document).on("keypress", function () {
     currentPlayer = playerOne;
     turnCount = 0;
     spaces = [];
-    // let playerOne = birdimages[0].src;
-    //currentPlayer = playerOne;
     $(".btn").html("🍞");
     $(".game-box").removeClass("hide");
     $("h5").removeClass("hide");
-    // $(".restart-button").removeClass("hide");
     $(".splash").addClass("hide");
   });
 
-  // $("#restart").on("click", function () {
-  //   started = false;
-  //   spaces = [];
-  //   turnCount = 0;
-  //   $(".btn").html("🥚");
-  //   restartGame();
-  //   console.log("restarting");
-  // });
-
-  // TODO: this
-  ///////// somehow have to put this picked bird src into the cell html:
-
+  // Button click - adds player to spaces array, animates:
   $(".btn").click(function () {
     let chosenCell = $(this).attr("id");
     $("#" + chosenCell)
       .fadeIn(100)
       .fadeOut(100)
       .fadeIn(100);
-
     clicked(chosenCell);
   });
 
+  // audio playing function:
   function playSound(name) {
     var audio = new Audio("sounds/" + name + ".wav");
     audio.play();
@@ -124,7 +114,6 @@ $(document).ready(function () {
       spaces[cellID] = currentPlayer;
 
       $("#" + cellID).html("<img src=" + currentPlayer + ">");
-      // $("#" + cellID).html(`${currentPlayer}`);
       turnCount++;
 
       console.log("turnCount:" + turnCount);
@@ -163,10 +152,11 @@ $(document).ready(function () {
     setTimeout(function () {
       $(".splash").removeClass("hide");
     }, 700);
-    let playerOneWins = winLogger.filter((word) => word === "O");
-    let playerTwoWins = winLogger.filter((word) => word === "X");
-    $(".playerOne").text(`Player O: ${playerOneWins.length}`);
-    $(".playerTwo").text(`Player X: ${playerTwoWins.length}`);
+
+    let playerOneWins = winLogger.filter((e) => e === playerOne);
+    let playerTwoWins = winLogger.filter((e) => e === playerTwo);
+    $(".playerOne").text(`Player 1: ${playerOneWins.length}`);
+    $(".playerTwo").text(`Player 2: ${playerTwoWins.length}`);
     console.log("win log: " + playerOneWins.toString() + ", " + playerTwoWins.toString());
   }
 
