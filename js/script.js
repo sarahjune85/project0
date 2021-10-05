@@ -1,6 +1,5 @@
 ///////////////////////////////////////////////////////
-//const cells = $(".btn");
-
+// globals:
 let turnCount = 0;
 let spaces = [];
 let winLogger = [];
@@ -98,7 +97,7 @@ $(document).ready(function () {
     $(".btn").css("pointer-events", "auto");
   });
 
-  // Button click - adds player to spaces array, animates:
+  // Button click - animates, passes to clicked func:
   $(".btn").click(function () {
     let chosenCell = $(this).attr("id");
     $("#" + chosenCell)

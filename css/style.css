@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-/* Main styles */
 body {
   margin: 0 auto;
   text-align: center;
@@ -27,13 +26,14 @@ body {
   transform: translate3d(-50%, -50%, 0);
   overflow: hidden;
   border: 1px solid rgb(121, 121, 121);
+  /* soft shadow generator courtesy of: https://shadows.brumm.af/ */
   box-shadow: -0.3px -0.3px 1.9px rgba(0, 0, 0, 0.021),
     0.1px 0.1px 4.3px rgba(0, 0, 0, 0.03), 1.6px 1.5px 7.7px rgba(0, 0, 0, 0.037),
     4.5px 4.4px 12.8px rgba(0, 0, 0, 0.043), 9.9px 9.6px 21.2px rgba(0, 0, 0, 0.05),
     20.1px 19.6px 37px rgba(0, 0, 0, 0.059), 45px 44px 80px rgba(0, 0, 0, 0.08);
 }
 
-/* background scroll effect */
+/* background scroll effect courtsey of https://codepen.io/alanvitek/pen/VjrAXg */
 .bg-scroll {
   opacity: 1;
   position: absolute;
@@ -56,7 +56,6 @@ body {
     background-position: 0 0;
   }
   100% {
-    /* pattern bg texture is 1000x1000px */
     background-position: 0 -500px;
   }
 }
@@ -130,22 +129,13 @@ h5 {
 }
 
 .btn:hover {
-  background-color: rgb(252, 177, 255);
+  background-color: rgb(255, 255, 197);
 }
 
 .pressed {
   box-shadow: 0 0 20px white;
   background-color: rgb(116, 116, 116);
 }
-/* 
-.restart-button {
-  font-family: "Press Start 2P", cursive;
-  border-radius: 27px;
-  position: absolute;
-  top: 81%;
-  left: 37%;
-  padding: 14px;
-} */
 
 .playerOne,
 .playerTwo {
@@ -163,50 +153,6 @@ h5 {
 
 .hide {
   display: none;
-}
-
-.error {
-  /* Start the shake animation and make the animation last for 0.5 seconds */
-  animation: shake 0.5s;
-
-  /* When the animation is finished, start again */
-  animation-iteration-count: infinite;
-}
-
-@keyframes error {
-  0% {
-    transform: translate(1px, 1px) rotate(0deg);
-  }
-  10% {
-    transform: translate(-1px, -2px) rotate(-1deg);
-  }
-  20% {
-    transform: translate(-3px, 0px) rotate(1deg);
-  }
-  30% {
-    transform: translate(3px, 2px) rotate(0deg);
-  }
-  40% {
-    transform: translate(1px, -1px) rotate(1deg);
-  }
-  50% {
-    transform: translate(-1px, 2px) rotate(-1deg);
-  }
-  60% {
-    transform: translate(-3px, 1px) rotate(0deg);
-  }
-  70% {
-    transform: translate(3px, 1px) rotate(-1deg);
-  }
-  80% {
-    transform: translate(-1px, -1px) rotate(1deg);
-  }
-  90% {
-    transform: translate(1px, 2px) rotate(0deg);
-  }
-  100% {
-    transform: translate(1px, -2px) rotate(-1deg);
-  }
 }
 
 .pulsate {
