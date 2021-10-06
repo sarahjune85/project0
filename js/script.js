@@ -21,50 +21,56 @@ for (let i = 0; i < 5; i++) {
 
 // On page load - initialise splash screen and character select:
 $(document).ready(function () {
-  $(".score").hide();
-  $(".game-box").hide();
+  startGame();
 
-  // bird character selection assigned to playerOne - default is position 0.
-  let i = 0;
-  playerOne = birdimages[0];
-  $(".bird").attr({ src: birdimages[i], width: 90 });
+  function startGame() {
+    $(".score").hide();
+    $(".game-box").hide();
 
-  $("#arrowleftbird").on("click", function () {
-    if (i > 0 && i <= birdimages.length - 1) {
-      i--;
-      playerOne = birdimages[i];
-      $(".bird").attr({ src: birdimages[i], width: 90 });
-    }
-  });
+    $(".reset-button").hide();
 
-  $("#arrowrightbird").on("click", function () {
-    if (i >= 0 && i < birdimages.length - 1) {
-      i++;
-      playerOne = birdimages[i];
-      $(".bird").attr({ src: birdimages[i], width: 90 });
-    }
-  });
+    // bird character selection assigned to playerOne - default is position 0.
+    let i = 0;
+    playerOne = birdimages[0];
+    $(".bird").attr({ src: birdimages[i], width: 90 });
 
-  // bread character selection assigned to playerTwo:
-  let j = 0;
-  playerTwo = breadimages[0];
-  $(".bread").attr({ src: breadimages[j], width: 90 });
+    $("#arrowleftbird").on("click", function () {
+      if (i > 0 && i <= birdimages.length - 1) {
+        i--;
+        playerOne = birdimages[i];
+        $(".bird").attr({ src: birdimages[i], width: 90 });
+      }
+    });
 
-  $("#arrowleftbread").on("click", function () {
-    if (j > 0 && j <= breadimages.length - 1) {
-      j--;
-      playerTwo = breadimages[j];
-      $(".bread").attr({ src: breadimages[j], width: 90 });
-    }
-  });
+    $("#arrowrightbird").on("click", function () {
+      if (i >= 0 && i < birdimages.length - 1) {
+        i++;
+        playerOne = birdimages[i];
+        $(".bird").attr({ src: birdimages[i], width: 90 });
+      }
+    });
 
-  $("#arrowrightbread").on("click", function () {
-    if (j >= 0 && j < breadimages.length - 1) {
-      j++;
-      playerTwo = breadimages[j];
-      $(".bread").attr({ src: breadimages[j], width: 90 });
-    }
-  });
+    // bread character selection assigned to playerTwo:
+    let j = 0;
+    playerTwo = breadimages[0];
+    $(".bread").attr({ src: breadimages[j], width: 90 });
+
+    $("#arrowleftbread").on("click", function () {
+      if (j > 0 && j <= breadimages.length - 1) {
+        j--;
+        playerTwo = breadimages[j];
+        $(".bread").attr({ src: breadimages[j], width: 90 });
+      }
+    });
+
+    $("#arrowrightbread").on("click", function () {
+      if (j >= 0 && j < breadimages.length - 1) {
+        j++;
+        playerTwo = breadimages[j];
+        $(".bread").attr({ src: breadimages[j], width: 90 });
+      }
+    });
+  }
 
   // On keypress - game start/restart. clears variables/splash:
   $(document).on("keypress", function () {
@@ -79,6 +85,23 @@ $(document).ready(function () {
     $(".score").show();
     $(".btn").css("pointer-events", "auto");
   });
+
+  // start/restart button - same function as keypress:
+  $(".start-button").click(function () {
+    currentPlayer = playerOne;
+    turnCount = 0;
+    spaces = [];
+    $(".btn").html(" ");
+    $(".game-box").show();
+    $("h5").hide();
+    $(".splash").hide();
+    $("p").hide();
+    $(".score").show();
+    $(".btn").css("pointer-events", "auto");
+  });
+
+  // reset button - takes game back to character select:
+  $(".reset-button").click(startGame());
 
   // Button click - animates, passes cell to clicked func:
   $(".btn").click(function () {
@@ -112,6 +135,7 @@ $(document).ready(function () {
       if (winner()) {
         playSound("bell");
         $("h4").html("<img src=" + currentPlayer + " width=70> has won!");
+
         stopGame();
         return;
       } else if (turnCount === 9 && !winner()) {
@@ -129,6 +153,7 @@ $(document).ready(function () {
 
   function stopGame() {
     // button killer:
+    $(".reset-button").show();
     $(".btn").css("pointer-events", "none");
     $(".picker").hide();
     $("h5").show();
@@ -143,6 +168,8 @@ $(document).ready(function () {
       $(".splash").show();
     }, 1000);
 
+    $(".reset-button").css({ right: "-10%", top: "-13%" });
+    $(".start-button").css({ right: "-22%", top: "-26%" });
     // filter() gathers # wins for each player:
     let playerOneWins = winLogger.filter((e) => e === playerOne);
     let playerTwoWins = winLogger.filter((e) => e === playerTwo);
