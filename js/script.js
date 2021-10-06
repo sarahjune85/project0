@@ -26,7 +26,7 @@ $(document).ready(function () {
   function startGame() {
     $(".score").hide();
     $(".game-box").hide();
-
+    $(".splash").show();
     $(".reset-button").hide();
 
     // bird character selection assigned to playerOne - default is position 0.
@@ -168,8 +168,8 @@ $(document).ready(function () {
       $(".splash").show();
     }, 1000);
 
-    $(".reset-button").css({ right: "-10%", top: "-13%" });
-    $(".start-button").css({ right: "-22%", top: "-26%" });
+    $(".reset-button").css({ right: "-7%", top: "-15%" });
+    $(".start-button").css({ right: "-29%", top: "-26%" });
     // filter() gathers # wins for each player:
     let playerOneWins = winLogger.filter((e) => e === playerOne);
     let playerTwoWins = winLogger.filter((e) => e === playerTwo);

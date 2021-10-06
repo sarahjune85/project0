@@ -129,7 +129,7 @@ h5 {
 }
 
 .btn:hover {
-  background-color: rgb(255, 255, 197);
+  background-color: rgb(250, 250, 219);
 }
 
 .pressed {
@@ -145,7 +145,7 @@ h5 {
 .scorebox {
   position: relative;
   top: -6%;
-  left: -12%;
+  left: -20%;
 }
 
 .score {
@@ -219,4 +219,35 @@ img:hover {
   top: 12%;
 }
 
-/* endgame splash */
+/* buttons courtesy of Joe Bocock https://codepen.io/joebocock/pen/ZEWoMPb */
+/* Fill button styling */
+.fill {
+  font-family: "Press Start 2P", cursive;
+  font-size: 11px;
+  font-weight: 200;
+  letter-spacing: 5px;
+  padding: 9px 9px 10px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.fill::after {
+  content: "";
+  background-color: #f51d1d26;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  top: 7px;
+  left: 7px;
+  transition: 0.2s;
+}
+
+.fill:hover::after {
+  top: 0px;
+  left: 0px;
+}
+/* End of Fill Button  */
