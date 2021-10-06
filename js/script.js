@@ -72,6 +72,17 @@ $(document).ready(function () {
     });
   }
 
+  // reset button - takes game back to character select:
+  $(".reset-button").on("click", function () {
+    startGame();
+    winLogger = [];
+    $("h4").text("Select your fighter:");
+    $(".picker").show();
+    $(".scorebox").hide();
+    $("p").show();
+    $(".start-button").css({ position: "relative", top: "26%", right: "0" });
+  });
+
   // On keypress - game start/restart. clears variables/splash:
   $(document).on("keypress", function () {
     currentPlayer = playerOne;
@@ -99,9 +110,6 @@ $(document).ready(function () {
     $(".score").show();
     $(".btn").css("pointer-events", "auto");
   });
-
-  // reset button - takes game back to character select:
-  $(".reset-button").click(startGame());
 
   // Button click - animates, passes cell to clicked func:
   $(".btn").click(function () {
@@ -156,6 +164,7 @@ $(document).ready(function () {
     $(".reset-button").show();
     $(".btn").css("pointer-events", "none");
     $(".picker").hide();
+    $(".scorebox").show();
     $("h5").show();
     $("h5").html("Press any key to restart.");
 
