@@ -13,7 +13,7 @@ for (let i = 0; i < 5; i++) {
   birdimages[i] = new Image().src = `img/bird${i + 1}.png`;
 }
 
-// bread character selection:
+// bread character selection - image src array:
 const breadimages = [];
 for (let i = 0; i < 5; i++) {
   breadimages[i] = new Image().src = `img/bread${i + 1}.png`;
@@ -72,7 +72,7 @@ $(document).ready(function () {
     });
   }
 
-  // reset button - takes game back to character select:
+  // reset button - takes game back to character select, clears wins:
   $(".reset-button").on("click", function () {
     startGame();
     winLogger = [];
@@ -143,7 +143,6 @@ $(document).ready(function () {
       if (winner()) {
         playSound("bell");
         $("h4").html("<img src=" + currentPlayer + " width=70> has won!");
-
         stopGame();
         return;
       } else if (turnCount === 9 && !winner()) {
@@ -160,8 +159,8 @@ $(document).ready(function () {
   }
 
   function stopGame() {
-    // button killer:
     $(".reset-button").show();
+    // board button killer:
     $(".btn").css("pointer-events", "none");
     $(".picker").hide();
     $(".scorebox").show();
@@ -186,6 +185,7 @@ $(document).ready(function () {
     $(".playerTwo").text(`P2: ${playerTwoWins.length}`);
   }
 
+  // Game logic:
   function winner() {
     // Anchor at 0 - top, diagonal left, left
     // 0, 1 and 2 - top line
