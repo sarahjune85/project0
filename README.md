@@ -1,4 +1,4 @@
-# bird vs bread.
+# 🐦 bird vs bread. 🍞
 
 **[Play here!](https://sarahjune85.github.io/project0/)**
 
@@ -14,13 +14,13 @@ HTML, CSS, & JavaScript/JQuery.
 
 _Surely you have played this before..._
 
-1. Each player can select the bird or bread token they wish to play as using the left & right arrows under the respective token.
+1. Each player can select the bird or bread they wish to play as, using the left & right arrows under the respective token.
 
 1. Start the game by either pressing any key on your keyboard or clicking the **Start** button.
 
 1. Winning the game is as simple as lining up 3 of your tokens first
 
-1. The winner and the current score will be displayed when someone is victorious.
+1. The winner and the current score will be displayed when someone is victorious or the game is a draw.
 
 ### On a win/draw:
 
@@ -35,7 +35,7 @@ Hitting **"Reset"** will clear both the tokens and the score.
 1. Some sort of localStorage to store state.
 2. A randomising player start to prevent player 1 winning constantly.
 3. Dynamically generated board of any size.
-4. Responsive container for mobile. Currently sort of playable but not ideal.
+4. Responsive container for mobile - currently playable, but not ideal.
 
 ## Credits & Thanks:
 
